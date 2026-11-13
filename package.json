@@ -1,0 +1,23 @@
+{
+  "name": "arcade-bomb-arena",
+  "version": "1.0.0",
+  "description": "Jogo multiplayer 2D de arena com bombas (servidor autoritativo) - Completo.",
+  "main": "server.js",
+  "private": true,
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node scripts/run-tests.js unit integration multiplayer",
+    "test:unit": "node scripts/run-tests.js unit",
+    "test:integration": "node scripts/run-tests.js integration",
+    "test:multiplayer": "node scripts/run-tests.js multiplayer"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "socket.io-client": "^4.7.5"
+  }
+}

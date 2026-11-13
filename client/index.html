@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arcade Bomb Arena</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/menu.css" />
+  <link rel="stylesheet" href="css/lobby.css" />
+  <link rel="stylesheet" href="css/game.css" />
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <!-- TELA INICIAL -->
+  <main id="screen-menu" class="screen">
+    <header class="logo" aria-label="Arcade Bomb Arena">
+      <span class="logo-top">ARCADE</span>
+      <span class="logo-main">BOMB<span class="logo-bomb" aria-hidden="true"></span>ARENA</span>
+    </header>
+
+    <section class="panel">
+      <label class="field">
+        <span>Seu nome</span>
+        <input id="input-name" type="text" maxlength="12" autocomplete="off" placeholder="Jogador" />
+      </label>
+
+      <div class="field">
+        <span>Personagem</span>
+        <div id="menu-char-grid" class="char-grid" role="radiogroup" aria-label="Escolha seu personagem">
+          <button class="char-card selected" type="button" data-char="rex">
+            <canvas class="pixel-preview" data-preview="rex" width="48" height="48"></canvas>
+            <strong>Rex</strong>
+            <small>Urbano</small>
+          </button>
+          <button class="char-card" type="button" data-char="luna">
+            <canvas class="pixel-preview" data-preview="luna" width="48" height="48"></canvas>
+            <strong>Luna</strong>
+            <small>Futurista</small>
+          </button>
+          <button class="char-card" type="button" data-char="byte">
+            <canvas class="pixel-preview" data-preview="byte" width="48" height="48"></canvas>
+            <strong>Byte</strong>
+            <small>Tech</small>
+          </button>
+          <button class="char-card" type="button" data-char="niko">
+            <canvas class="pixel-preview" data-preview="niko" width="48" height="48"></canvas>
+            <strong>Niko</strong>
+            <small>Street</small>
+          </button>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="btn-create-room" class="btn btn-primary" type="button" disabled>CRIAR SALA</button>
+
+        <div class="join-row">
+          <input id="input-room-code" type="text" maxlength="6" autocomplete="off" placeholder="CÓDIGO" aria-label="Código da sala" />
+          <button id="btn-join-room" class="btn" type="button" disabled>ENTRAR</button>
+        </div>
+
+        <button id="btn-play-bots" class="btn btn-accent" type="button" disabled>🤖 JOGAR VS BOTS</button>
+        <button id="btn-matchmaking" class="btn" type="button" disabled>ENCONTRAR PARTIDA ONLINE</button>
+      </div>
+
+      <div id="mm-box" class="mm-box hidden">
+        <span>Procurando adversários na fila…</span>
+        <button id="btn-cancel-mm" class="btn btn-small" type="button">Cancelar</button>
+      </div>
+
+      <p id="msg" class="msg" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="panel help">
+      <h2>Controles</h2>
+      <p><kbd>W A S D</kbd> ou <kbd>Setas</kbd> mover &middot; <kbd>Espaço</kbd> bomba &middot; <kbd>M</kbd> som &middot; <kbd>Esc</kbd> sair</p>
+    </section>
+  </main>
+
+  <!-- TELA DE LOBBY -->
+  <main id="screen-lobby" class="screen hidden">
+    <header class="logo logo-compact">
+      <span class="logo-top">SALA DE PREPARAÇÃO</span>
+      <span class="logo-main">BOMB<span class="logo-bomb" aria-hidden="true"></span>ARENA</span>
+    </header>
+
+    <section class="panel panel-wide">
+      <div class="lobby-header">
+        <div>
+          <span class="label-mini">CÓDIGO DA SALA</span>
+          <div class="code-box">
+            <strong id="lobby-code">------</strong>
+            <button id="btn-copy-code" class="btn btn-small" type="button">Copiar</button>
+          </div>
+        </div>
+        <div class="lobby-meta">
+          <span id="lobby-type" class="badge">Sala Privada</span>
+          <span id="lobby-count" class="badge">1/4 Jogadores</span>
+        </div>
+      </div>
+
+      <div id="lobby-countdown" class="countdown-banner hidden"></div>
+
+      <div class="field">
+        <span>Trocar personagem</span>
+        <div id="lobby-char-grid" class="char-grid">
+          <button class="char-card" type="button" data-char="rex">
+            <canvas class="pixel-preview" data-preview="rex" width="44" height="44"></canvas>
+            <strong>Rex</strong>
+          </button>
+          <button class="char-card" type="button" data-char="luna">
+            <canvas class="pixel-preview" data-preview="luna" width="44" height="44"></canvas>
+            <strong>Luna</strong>
+          </button>
+          <button class="char-card" type="button" data-char="byte">
+            <canvas class="pixel-preview" data-preview="byte" width="44" height="44"></canvas>
+            <strong>Byte</strong>
+          </button>
+          <button class="char-card" type="button" data-char="niko">
+            <canvas class="pixel-preview" data-preview="niko" width="44" height="44"></canvas>
+            <strong>Niko</strong>
+          </button>
+        </div>
+      </div>
+
+      <div id="lobby-players" class="player-slots"></div>
+
+      <div class="lobby-footer">
+        <button id="btn-leave-room" class="btn btn-danger" type="button">Sair da sala</button>
+        <button id="btn-ready" class="btn" type="button">ESTOU PRONTO</button>
+        <button id="btn-start-game" class="btn btn-primary hidden" type="button">INICIAR PARTIDA</button>
+      </div>
+
+      <p id="lobby-msg" class="msg" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <!-- TELA DE JOGO (ARENA) -->
+  <main id="screen-game" class="game-screen hidden">
+    <header class="hud-bar">
+      <div id="hud-players" class="hud-players"></div>
+
+      <div class="hud-center">
+        <span id="hud-timer" class="hud-timer">04:00</span>
+        <span id="hud-sudden" class="hud-sudden hidden">SUDDEN DEATH!</span>
+      </div>
+
+      <div class="hud-controls">
+        <button id="btn-mute" class="btn btn-small" type="button" title="Ativar/Desativar Som">🔊 Som</button>
+        <button id="btn-quit-match" class="btn btn-small btn-danger" type="button">Sair</button>
+      </div>
+    </header>
+
+    <div class="canvas-wrap">
+      <canvas id="game-canvas" width="748" height="660"></canvas>
+
+      <!-- Controles Touch para dispositivos móveis -->
+      <div class="touch-controls" aria-hidden="true">
+        <div class="dpad">
+          <button data-dir="up" class="dpad-btn dpad-up">▲</button>
+          <button data-dir="left" class="dpad-btn dpad-left">◀</button>
+          <button data-dir="down" class="dpad-btn dpad-down">▼</button>
+          <button data-dir="right" class="dpad-btn dpad-right">▶</button>
+        </div>
+        <button id="btn-touch-bomb" class="touch-bomb">💣</button>
+      </div>
+
+      <!-- Modal de Fim de Partida -->
+      <div id="gameover-overlay" class="gameover-overlay hidden">
+        <div class="gameover-card">
+          <span class="label-mini">FIM DE PARTIDA</span>
+          <h2 id="gameover-title">VITÓRIA!</h2>
+          <div id="gameover-ranking" class="ranking-list"></div>
+          <p class="gameover-hint">Retornando ao lobby em instantes…</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="status">
+    <span id="conn-dot" class="dot dot-off"></span>
+    <span id="conn-text">Conectando…</span>
+    <span id="conn-rtt"></span>
+  </footer>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+.game-screen {
+  position: relative;
+  z-index: 2;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 10px 12px 44px;
+}
+
+.hud-bar {
+  width: min(860px, 100%);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: color-mix(in srgb, var(--panel) 94%, transparent);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  padding: 8px 14px;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, .35);
+}
+
+.hud-players {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.hud-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #0d0d27;
+  border: 2px solid var(--line);
+  border-radius: 10px;
+  padding: 4px 10px;
+  font-size: .8rem;
+}
+.hud-pill.me { border-color: var(--orange); }
+.hud-pill.dead { opacity: .45; filter: grayscale(1); }
+
+.hud-stats {
+  display: flex;
+  gap: 6px;
+  font-size: .72rem;
+  color: var(--muted);
+}
+
+.hud-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hud-timer {
+  font-size: 1.35rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.hud-timer.urgent { color: var(--red); animation: pulse-fast .6s infinite alternate; }
+@keyframes pulse-fast { to { transform: scale(1.06); } }
+
+.hud-sudden {
+  font-size: .68rem;
+  font-weight: 800;
+  color: var(--orange);
+  letter-spacing: .15em;
+}
+
+.hud-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.canvas-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+}
+
+#game-canvas {
+  display: block;
+  width: min(880px, 95vw, calc((100vh - 125px) * (17 / 15)));
+  height: auto;
+  border: 3px solid var(--line);
+  border-radius: 12px;
+  background: #09091a;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .55), 0 0 24px rgba(53, 182, 255, .14);
+  image-rendering: pixelated;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.gameover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 8, 24, .84);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 10;
+}
+
+.gameover-card {
+  width: min(400px, 100%);
+  background: var(--panel);
+  border: 2px solid var(--orange);
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 0 32px rgba(255, 138, 31, .35);
+}
+.gameover-card h2 {
+  margin: 6px 0 14px;
+  font-size: 1.6rem;
+  color: var(--orange);
+  letter-spacing: .08em;
+}
+
+.ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.rank-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0d0d27;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: .88rem;
+}
+.rank-row.winner { border-color: var(--green); color: var(--green); font-weight: 700; }
+
+.gameover-hint {
+  margin: 0;
+  font-size: .8rem;
+  color: var(--muted);
+}
+
+.pixel-preview {
+  width: 44px;
+  height: 44px;
+  image-rendering: pixelated;
+}
+
+.touch-controls {
+  display: none;
+  position: fixed;
+  bottom: 36px;
+  left: 12px;
+  right: 12px;
+  justify-content: space-between;
+  align-items: flex-end;
+  pointer-events: none;
+  z-index: 8;
+}
+@media (pointer: coarse) {
+  .touch-controls { display: flex; }
+}
+
+.dpad {
+  position: relative;
+  width: 132px;
+  height: 132px;
+  pointer-events: auto;
+}
+.dpad-btn {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: 2px solid var(--line);
+  background: rgba(21, 21, 58, .85);
+  color: var(--text);
+  font-size: 1rem;
+}
+.dpad-up { top: 0; left: 44px; }
+.dpad-down { bottom: 0; left: 44px; }
+.dpad-left { top: 44px; left: 0; }
+.dpad-right { top: 44px; right: 0; }
+
+.touch-bomb {
+  pointer-events: auto;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: 3px solid #ffc27d;
+  background: linear-gradient(#ffa13d, #ff7a00);
+  font-size: 1.6rem;
+}

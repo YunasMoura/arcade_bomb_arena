@@ -1,0 +1,50 @@
+.lobby-header {
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;
+  padding-bottom: 12px; border-bottom: 1px solid var(--line);
+}
+.label-mini { display: block; font-size: .72rem; letter-spacing: .15em; color: var(--muted); margin-bottom: 4px; }
+.code-box { display: flex; align-items: center; gap: 10px; }
+.code-box strong {
+  font-size: 1.7rem; letter-spacing: .22em; color: var(--orange);
+  background: #0d0d27; padding: 6px 14px; border-radius: 10px; border: 2px solid var(--line);
+}
+
+.lobby-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+.badge {
+  background: #0d0d27; border: 1px solid var(--line); border-radius: 999px;
+  padding: 6px 12px; font-size: .8rem; color: var(--blue); font-weight: 600;
+}
+
+.countdown-banner {
+  text-align: center; padding: 10px; border-radius: 10px;
+  background: rgba(255, 138, 31, .18); border: 2px solid var(--orange);
+  color: #ffd8a8; font-weight: 800; letter-spacing: .08em;
+}
+
+.player-slots { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+@media (max-width: 520px) { .player-slots { grid-template-columns: 1fr; } }
+
+.slot-card {
+  background: #0d0d27; border: 2px solid var(--line); border-radius: 12px; padding: 12px;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.slot-card.empty { opacity: .8; border-style: dashed; justify-content: space-between; color: var(--muted); font-size: .85rem; }
+.slot-card.ready { border-color: var(--green); }
+
+.slot-info { display: flex; align-items: center; gap: 10px; }
+.slot-name { font-weight: 700; font-size: .95rem; display: block; }
+.slot-sub { font-size: .75rem; color: var(--muted); }
+
+.pill-ready {
+  padding: 4px 10px; border-radius: 999px; font-size: .75rem; font-weight: 700;
+  background: rgba(76, 220, 122, .18); color: var(--green); border: 1px solid var(--green);
+}
+.pill-wait {
+  padding: 4px 10px; border-radius: 999px; font-size: .75rem;
+  background: rgba(154, 154, 208, .12); color: var(--muted);
+}
+
+.lobby-footer {
+  display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center;
+  padding-top: 8px; border-top: 1px solid var(--line);
+}
